@@ -33,5 +33,5 @@ do
 
 done < $file
 
-echo $count1
-echo $count2
+echo Challenge 1: $count1
+echo Challenge 2: $count2
