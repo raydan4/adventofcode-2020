@@ -24,6 +24,6 @@ if __name__ == '__main__':
     for line in f:
       numset.add(int(line))
 
-  print(part1(numset))
-  print(part2(numset))
+  print(f'challenge 1: {part1(numset)}')
+  print(f'challenge 2: {part2(numset)}')
 
