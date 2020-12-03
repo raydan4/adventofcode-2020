@@ -13,7 +13,8 @@ int main() {
   if (fp == NULL) {
     exit(1);
   }
-
+  
+  // Variables for getline and iteration counter
   char *line = NULL;
   size_t len = 0;
   size_t counter = 0;

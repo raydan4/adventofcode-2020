@@ -6,7 +6,7 @@ Probably not that long.
 
 
 # What did I use?
-Day 1: python
-Day 2: bash
-Day 3: c
+- Day 1: python
+- Day 2: bash
+- Day 3: c
 
