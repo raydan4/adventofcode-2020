@@ -1,6 +1,5 @@
-from requests import get
-
 FILE = 'day1.input'
+
 
 def part1(numset):
   for i in numset:
