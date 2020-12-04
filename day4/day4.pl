@@ -37,7 +37,7 @@ sub validate_passport {
   if (!exists($passport{"pid"})) { return 0; }
   else {
     my $pid = $passport{"pid"};
-    if (length($pid) > 9) { return 0;}
+    if (length($pid) != 9) { return 0;}
   }
   if (!exists($passport{"hcl"})) { return 0; }
   if (!exists($passport{"ecl"})) { return 0; }
@@ -79,7 +79,7 @@ while (my $line = <$file>) {
       if (/ecl:(amb|blu|brn|gry|grn|hzl|oth)/) {
         $passport{'ecl'} = $1;
       }
-      if (/pid:(\d{9})/) {
+      if (/pid:(\d+)/) {
         $passport{'pid'} = $1;
       }
       #if (/cid:/) {
