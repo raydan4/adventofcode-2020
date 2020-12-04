@@ -9,4 +9,5 @@ Probably not that long.
 - Day 1: python
 - Day 2: bash
 - Day 3: c
+- Day 4: perl
 
