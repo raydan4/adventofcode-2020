@@ -10,4 +10,5 @@ Probably not that long.
 - Day 2: bash
 - Day 3: c
 - Day 4: perl
+- Day 5: rust
 
