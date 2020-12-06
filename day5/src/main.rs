@@ -10,6 +10,10 @@ fn calc_row_col(line: std::string::String) -> (i32, i32) {
   let mut rawbin = 0;
 
   for (i, c) in line.chars().enumerate() {
+    // Each of the characters in the line are one bit
+    // 'B' and 'R' are 1, 'F' and 'L' are 0
+    // We need to insert the bits left to right as we read them
+    // 1 << (position) * (1 or 0)
     rawbin |= (1 << (9 - i)) * (c == 'B' || c == 'R') as i32;
   }
   (rawbin >> 3, rawbin & 7)
