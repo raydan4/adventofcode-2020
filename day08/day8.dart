@@ -22,17 +22,19 @@ int main() {
 
   while(true) {
     if (ran.containsKey(pc) || pc < 0 || pc > instructions.length - 1) {
-      // Only print challenge 1 result once
+      // Only print challenge 1 result on first pass
       if (candidate == -1) { print("Challenge 1: $acc"); }
-
+      // Otherwise failed candidate
+      else { candidates.removeFirst(); }
+      
+      // Update candidate
+      candidate = candidates.first;
+ 
       // Clear execution variables
       ran.clear();
       acc = 0;
       pc = 0;
 
-      // Update modification candidate
-      candidates.removeFirst();
-      candidate = candidates.first;      
     }
     // If command is last line of input program ran successfully
     if (pc == instructions.length -1) { print("Challenge 2: $acc"); return 0; }
