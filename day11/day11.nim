@@ -59,18 +59,18 @@ proc simulate(state: seq[string], maxadjacent: int, limit: bool): int =
   count_occupied(curr)
 
 
-# Main
-var strm = newFileStream("day11.input", fmRead)
-var line = ""
-var start = newSeq[string]()
+when isMainModule:
+  var strm = newFileStream("day11.input", fmRead)
+  var line = ""
+  var start = newSeq[string]()
 
-if not isNil(strm):
-  while strm.readLine(line):
-    if not isEmptyOrWhitespace(line): start.add(line.strip())
-  strm.close()
+  if not isNil(strm):
+    while strm.readLine(line):
+      if not isEmptyOrWhitespace(line): start.add(line.strip())
+    strm.close()
 
-let challenge1 = simulate(start, 4, true)
-echo "Challenge 1: ", challenge1
+  let challenge1 = simulate(start, 4, true)
+  echo "Challenge 1: ", challenge1
 
-let challenge2 = simulate(start, 5, false)
-echo "Challenge 2: ", challenge2
+  let challenge2 = simulate(start, 5, false)
+  echo "Challenge 2: ", challenge2
