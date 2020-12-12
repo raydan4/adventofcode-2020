@@ -8,33 +8,29 @@ func count_occupied(state: seq[string]): int =
   count
 
 
-func in_range(pos: int, min: int, max: int): bool =
-  min <= pos and max >= pos
-
-
-proc next_seat_full(state: seq[string], i: int, j: int, h: int, w: int, limit: bool): bool =
+proc next_seat_full(state: seq[string], rcenter: int, ccenter: int, rdelta: int, cdelta: int, limit: bool): bool =
   let rmax = len(state) - 1
-  let cmax = len(state[i]) - 1
+  let cmax = len(state[rcenter]) - 1
 
-  var row = i + h
-  var col = j + w
+  var row = rcenter + rdelta
+  var col = ccenter + cdelta
 
-  while in_range(row, 0, rmax) and in_range(col, 0, cmax):
+  while row in 0..rmax and col in 0..cmax:
     let c = state[row][col]
     if c == '#': return true
     if c == 'L': return false
     if limit: break
-    row += h
-    col += w
+    row += rdelta
+    col += cdelta
   false 
 
 
-proc count_adjacent(state: seq[string], i: int, j: int, limit: bool): int =
+proc count_adjacent(state: seq[string], rcenter: int, ccenter: int, limit: bool): int =
   var count  = 0
   for h in -1..1:
     for w in -1..1:
       if h == 0 and w == 0: continue
-      count += int(next_seat_full(state, i, j, h, w, limit))
+      count += int(next_seat_full(state, rcenter, ccenter, h, w, limit))
   count
 
 
