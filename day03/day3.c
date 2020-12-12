@@ -4,8 +4,44 @@
 
 #define TREE '#'
 
-int get_index(int current, int step) {
-  return (current + step) % 31;
+typedef struct Sled {
+  size_t right;
+  size_t down;
+  size_t count;
+} sled;
+typedef sled *sledp;
+
+void make_sleds(sledp sleds, size_t sled_steps[], size_t numsleds) {
+  // Number of sleds will be half number of sled dimensions
+  size_t numsledsteps = numsleds * 2;
+
+  sleds = (sledp)realloc(sleds, numsleds * sizeof(sled));
+  // Parse each pair of sled steps into a sled
+  for (size_t i = 0; i < numsledsteps; i+=2) {
+    sleds[i/2].right  = sled_steps[i];
+    sleds[i/2].down = sled_steps[i+1];
+  }
+}
+
+void count_trees(FILE *fp, sled *sleds, size_t numsleds) {
+  char *line = NULL;
+  size_t len = 0;
+  size_t counter = 0;
+
+  while (getline(&line, &len, fp) != -1) {
+    for (size_t i = 0; i < numsleds; i++) {
+      // index is right step * row / down step mod 31
+      size_t index = sleds[i].right * counter / sleds[i].down % 31;
+      // row is only counted if column is divisible by down step
+      size_t iscounted = (counter % sleds[i].down == 0);
+      // check if row[index] is a tree
+      size_t istree = (line[index] == TREE);
+      sleds[i].count += istree * iscounted;
+    }
+    counter ++;
+  }
+  free(line);
+  fclose(fp);
 }
 
 int main() {
@@ -14,49 +50,22 @@ int main() {
     exit(1);
   }
   
-  // Variables for getline and iteration counter
-  char *line = NULL;
-  size_t len = 0;
-  size_t counter = 0;
-  
-  // Counters for each path's index
-  size_t index_r1d1 = 0;
-  size_t index_r3d1 = 0;
-  size_t index_r5d1 = 0;
-  size_t index_r7d1 = 0;
-  size_t index_r1d2 = 0;
+  // Setup vars
+  size_t result = 1;
+  size_t sled_steps[] = {1, 1, 3, 1, 5, 1, 7, 1, 1, 2};
+  size_t numsleds = 5;
 
-  // Counters for number of trees on each path
-  size_t r1d1 = 0;
-  size_t r3d1 = 0;
-  size_t r5d1 = 0;
-  size_t r7d1 = 0;
-  size_t r1d2 = 0;
+  // Make sleds and count trees
+  sledp sleds = malloc(1);
+  make_sleds(sleds, sled_steps, numsleds);
+  count_trees(fp, sleds, numsleds);
 
-  while (getline(&line, &len, fp) != -1) {
-    // Increment line counter first
-    counter ++;
-
-    r1d1 += (line[index_r1d1] == TREE);
-    r3d1 += (line[index_r3d1] == TREE);
-    r5d1 += (line[index_r5d1] == TREE);
-    r7d1 += (line[index_r7d1] == TREE);
-    // Only count trees for r1d2 every other row
-    r1d2 += (line[index_r1d2] == TREE) * (counter % 2);
-    
-    index_r1d1 = get_index(index_r1d1, 1);
-    index_r3d1 = get_index(index_r3d1, 3);
-    index_r5d1 = get_index(index_r5d1, 5);
-    index_r7d1 = get_index(index_r7d1, 7);
-    // Only increment r1d2 index every other row
-    index_r1d2 = get_index(index_r1d2, counter % 2);
-  }
-
-  // Print product of all tree counts
-  printf("%ld\n", r1d1 * r3d1 * r5d1 * r7d1 * r1d2);
-
-  fclose(fp);
-  free(line);
+  // Calculate and display results
+  for (size_t i = 0; i < numsleds; i++) result *= sleds[i].count;
+  printf("Challenge 1: %ld\n", sleds[1].count);
+  printf("Challenge 2: %ld\n", result);
+ 
+  free(sleds);
 
   return 0;
 }
