@@ -2,10 +2,8 @@ import streams, strutils, strformat, sequtils, sugar
 
 
 func count_occupied(state: seq[string]): int =
-  var count = 0
   for row in state:
-    count += len(row.filter(x => x == '#'))
-  count
+    result += len(row.filter(x => x == '#'))
 
 
 proc next_seat_full(state: seq[string], rcenter: int, ccenter: int, rdelta: int, cdelta: int, limit: bool): bool =
@@ -26,23 +24,20 @@ proc next_seat_full(state: seq[string], rcenter: int, ccenter: int, rdelta: int,
 
 
 proc count_adjacent(state: seq[string], rcenter: int, ccenter: int, limit: bool): int =
-  var count  = 0
   for h in -1..1:
     for w in -1..1:
       if h == 0 and w == 0: continue
-      count += int(next_seat_full(state, rcenter, ccenter, h, w, limit))
-  count
+      result += int(next_seat_full(state, rcenter, ccenter, h, w, limit))
 
 
 proc calc_round(state: seq[string], maxadjacent: int, limit: bool): seq[string] =
-  var new = state
+  result = state
   
   for i, row in state:
     for j, col in row:
       let sum = count_adjacent(state, i, j, limit)
-      if col == '#' and sum >= maxadjacent: new[i][j] = 'L'
-      if col == 'L' and sum == 0: new[i][j] = '#'
-  new
+      if col == '#' and sum >= maxadjacent: result[i][j] = 'L'
+      if col == 'L' and sum == 0: result[i][j] = '#'
 
 
 proc simulate(state: seq[string], maxadjacent: int, limit: bool): int =
