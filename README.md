@@ -19,3 +19,5 @@ Probably.
 - Day  8: dart
 - Day  9: (coming back to this in not excel)
 - Day 10: julia
+- Day 11: nim
+- Day 12: lua
