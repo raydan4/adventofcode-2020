@@ -64,27 +64,13 @@ while (my $line = <$file>) {
       if (/byr:(\d{4})/) {
         $passport{'byr'} = $1;
       }
-      if (/iyr:(\d{4})/) {
-        $passport{'iyr'} = $1;
-      }
-      if (/eyr:(\d{4})/) {
-        $passport{'eyr'} = $1;
-      }
-      if (/hgt:(\d+(in|cm))/) {
-        $passport{'hgt'} = $1;
-      }
-      if (/hcl:(\#[0-9a-f]{6})/) {
-        $passport{'hcl'} = $1;
-      }
-      if (/ecl:(amb|blu|brn|gry|grn|hzl|oth)/) {
-        $passport{'ecl'} = $1;
-      }
-      if (/pid:(\d+)/) {
-        $passport{'pid'} = $1;
-      }
-      #if (/cid:/) {
-      #  $passport{'cid'} = $1;
-      #}
+      if (/iyr:(\d{4})/)                        { $passport{'iyr'} = $1; }
+      if (/eyr:(\d{4})/)                        { $passport{'eyr'} = $1; }
+      if (/hgt:(\d+(in|cm))/)                   { $passport{'hgt'} = $1; }
+      if (/hcl:(\#[0-9a-f]{6})/)                { $passport{'hcl'} = $1; }
+      if (/ecl:(amb|blu|brn|gry|grn|hzl|oth)/)  { $passport{'ecl'} = $1; }
+      if (/pid:(\d+)/)                          { $passport{'pid'} = $1; }
+      #if (/cid:/)                              { $passport{'cid'} = $1; }
     }
   }
 }
